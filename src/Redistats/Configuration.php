@@ -8,6 +8,9 @@ Class Configuration {
 
     protected $_configPath;
 
+    /**
+     * Constructor
+     */
     public function __construct() {
         $this->_configPath = dirname(dirname(__FILE__)) . '/../config/config.json';
         if (!file_exists($this->_configPath)) {
@@ -16,7 +19,9 @@ Class Configuration {
     }
 
     /**
+     * Return an object instance
      * 
+     * @return Redistats\Configuration
      */
     public static function getInstance() {
         if (!self::$_instance) {
@@ -26,7 +31,11 @@ Class Configuration {
     }
 
     /**
+     * Get the config of $key
      * 
+     * @param string $key
+     * 
+     * @return array
      */
     public function get($key) {
         $config = $this->_getConfig();
@@ -36,6 +45,11 @@ Class Configuration {
         return $config->$key;
     }
 
+    /**
+     * Get the all config
+     * 
+     * @return array
+     */
     protected function _getConfig() {
         return json_decode(file_get_contents($this->_configPath));
     }
