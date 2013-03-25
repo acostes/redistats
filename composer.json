@@ -1,0 +1,26 @@
+{
+    "name": "redistats",
+    "type": "",
+    "description": "",
+    "keywords": [
+
+    ],
+    "homepage": "",
+    "license": "MIT",
+    "authors": [
+        {
+            "name": "Arnaud Costes",
+            "email": "arnaud.costes@gmail.com",
+            "homepage": "http://www.acostes.fr",
+            "role": "Developer"
+        }
+    ],
+    "require": {
+        "php": ">=5.3.0",
+        "predis/predis": "dev-master"
+     },
+    "autoload": {
+        "psr-0": {"Redistats": "src/"}
+    }
+}
+
