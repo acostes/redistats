@@ -2,6 +2,8 @@
 
 namespace Redistats;
 
+use Predis;
+
 class Redis {
 
     protected $_client;
@@ -13,7 +15,7 @@ class Redis {
      * @param int $port
      */
     public function __construct($host = '127.0.0.1', $port = '6379') {
-        $this->_client = new \Predis\Client(array(
+        $this->_client = new Predis\Client(array(
             'scheme' => 'tcp',
             'host'   => $host,
             'port'   => $port,
@@ -30,7 +32,7 @@ class Redis {
         try {
             $result = call_user_func_array(array($this->_client, $name), $args);
             return $result;
-        } catch (\Predis\ClientException $e) {
+        } catch (\Exception $e) {
             error_log($e->getMessage());
             $this->disconnect();
         }
