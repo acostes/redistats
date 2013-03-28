@@ -14,11 +14,12 @@ class Redis {
      * @param string $host
      * @param int $port
      */
-    public function __construct($host = '127.0.0.1', $port = '6379') {
+    public function __construct($host = '127.0.0.1', $port = '6379', $database = 0) {
         $this->_client = new Predis\Client(array(
-            'scheme' => 'tcp',
-            'host'   => $host,
-            'port'   => $port,
+            'scheme'    => 'tcp',
+            'host'      => $host,
+            'port'      => $port,
+            'database'  => $database,
         ));
     }
 

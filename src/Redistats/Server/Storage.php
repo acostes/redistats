@@ -11,8 +11,6 @@ class Storage extends Redis {
 
     protected $_client;
 
-    const PREFIX = 'storage';
-
     /**
      * Constructor
      */
