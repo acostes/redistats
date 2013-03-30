@@ -1,11 +1,11 @@
 {
-    "name": "redistats",
-    "type": "",
-    "description": "",
+    "name": "acostes/redistats",
+    "type": "Web App",
+    "description": "Web app to monitor redis servers",
     "keywords": [
-
+        "nosql", "redis", "stats", "graph", "api"
     ],
-    "homepage": "",
+    "homepage": "https://github.com/acostes/redistats",
     "license": "MIT",
     "authors": [
         {
@@ -17,7 +17,8 @@
     ],
     "require": {
         "php": ">=5.3.0",
-        "predis/predis": "dev-master"
+        "predis/predis": "dev-master",
+        "respect/rest": "dev-master"
      },
     "autoload": {
         "psr-0": {"Redistats": "src/"}

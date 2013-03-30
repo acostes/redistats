@@ -21,8 +21,6 @@ class Monitoring {
 
         } while(true);
     }
-
-
 }
 
 $script = new Monitoring();
