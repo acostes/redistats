@@ -15,5 +15,9 @@
             "port": "12345",
             "id": "2"
         }
+    },
+
+    "monitoring": {
+        "refresh": "120"
     }
 }
