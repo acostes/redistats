@@ -75,21 +75,21 @@ class Monitor extends Redis {
 
     public function compute() {
         $info = $this->info();
-        $key = 'stats:' . $this->_id . ':' . time();
         $result = array();
+        $date = time();
         foreach ($this->_groupInfo as $groups => $types) {
             foreach ($types as $type) {
-                $result[$type] = 0;
+                $key = 'stats:' . $this->_id . ':' . $type;
+                $result[$date] = 0;
                 if ($type == self::KEYS || $type == self::EXPIRES) {
                     if (isset($info[$groups]['db' . $this->_database])) {
-                        $result[$type] = $info[$groups]['db' . $this->_database][$this->_types[$type]];
+                        $result[$date] = $info[$groups]['db' . $this->_database][$this->_types[$type]];
                     }                
                 } else {
-                    $result[$type] = $info[$groups][$this->_types[$type]];
+                    $result[$date] = $info[$groups][$this->_types[$type]];
                 }
-                
+                Storage::getInstance()->set($key, $result);
             }
         }
-        Storage::getInstance()->set($key, $result);
     }
 }

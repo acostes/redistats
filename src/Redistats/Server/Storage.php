@@ -37,10 +37,10 @@ class Storage extends Redis {
      * @param string $key
      * @param array $data
      * 
-     * @return string (Status reply: http://redis.io/topics/protocol#status-reply)
+     * @return int (number of elements add)
      */
     public function set($key, $data) {
-        return $this->hmset($key, $data);
+        return $this->zadd($key, $data);
     }
 
     /**
@@ -49,18 +49,9 @@ class Storage extends Redis {
      * @param string $key
      * @param array|string $data
      * 
-     * @return array|string
+     * @return array
      */
-    public function get($key, $field = null) {
-        if (is_null($field)) {
-            return $this->hgetall($key);
-        }
-
-        if (is_array($field)) {
-            $result = $this->hmget($key, $field);
-            return array_combine($field, $result);
-        }
-
-        return $this->hget($key, $field);
+    public function get($key, $limit = 10, $offset = 0) {
+        return $this->zrange($key, $offset, $limit, 'WITHSCORES');
     }
 }
