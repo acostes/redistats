@@ -92,6 +92,9 @@ class Monitor extends Redis {
         return $this->_id;
     }
 
+    public function getHostname() {
+        return $this->_client->getConnection();
+    }
 
     /**
      * Get stats

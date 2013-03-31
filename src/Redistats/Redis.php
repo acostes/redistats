@@ -23,6 +23,11 @@ class Redis {
         ));
     }
 
+    /**
+     * Force connection to the redis server
+     * 
+     * @return Predis\Client
+     */
     public function connect() {
         try {
             if (!$this->_client->isConnected()) {
@@ -40,6 +45,8 @@ class Redis {
      * 
      * @param string $name
      * @param array $args
+     * 
+     * @return array
      */
     public function __call($name, $args) {
         try {            

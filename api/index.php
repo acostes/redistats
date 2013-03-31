@@ -2,6 +2,7 @@
 require_once dirname(dirname(__FILE__)) . '/vendor/autoload.php';
 
 use Respect\Rest\Router;
+use Redistats\Log;
 use Redistats\Server;
 use Redistats\RedistatsException;
 
@@ -30,5 +31,6 @@ $api->get('/types', function () {
 try {
     echo $api->run();
 } catch (RedistatsException $e) {
+    Log::MONITORING($e->getMessage(), Log::ERROR);
     echo json_encode(array('error' => $e->getMessage()));
 }
