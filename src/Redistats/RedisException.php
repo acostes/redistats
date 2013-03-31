@@ -2,7 +2,5 @@
 
 namespace Redistats;
 
-use Predis\PredisException;
-
-class RedisException extends PredisException {
+class RedisException extends RedistatsException {
 }

@@ -23,6 +23,18 @@ class Redis {
         ));
     }
 
+    public function connect() {
+        try {
+            if (!$this->_client->isConnected()) {
+                $this->_client->connect();
+            }
+            return $this->_client;
+        } catch (Predis\PredisException $e) {
+            throw new RedisException('Unable to connect to ' . $this->_client->getConnection());
+        }
+
+    }
+
     /**
      * Magic call
      * 
@@ -30,12 +42,12 @@ class Redis {
      * @param array $args
      */
     public function __call($name, $args) {
-        try {
-            $result = call_user_func_array(array($this->_client, $name), $args);
+        try {            
+            $result = call_user_func_array(array($this->connect(), $name), $args);
             return $result;
-        } catch (\Exception $e) {
-            error_log($e->getMessage());
+        } catch (Predis\PredisException $e) {
             $this->disconnect();
+            throw new RedisException($e->getMessage());            
         }
     }
 }

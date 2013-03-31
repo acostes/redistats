@@ -24,7 +24,7 @@ class Monitor extends Redis {
     const KEYS                          = 'k';
     const EXPIRES                       = 'e';
 
-    protected $_types = array(
+    protected static $_types = array(
         self::CONNECTED_CLIENTS             => 'connected_clients',
         self::BLOCKED_CLIENTS               => 'blocked_clients',
         self::USED_MEMORY                   => 'used_memory',
@@ -117,7 +117,7 @@ class Monitor extends Redis {
      * 
      * @return void
      */
-    public function serverInfo() {
+    public function getServerInfo() {
         $info = $this->info();
         return $info['Server'];
     }
@@ -137,13 +137,22 @@ class Monitor extends Redis {
                 $result[$date] = 0;
                 if ($type == self::KEYS || $type == self::EXPIRES) {
                     if (isset($info[$groups]['db' . $this->_database])) {
-                        $result[$date] = $info[$groups]['db' . $this->_database][$this->_types[$type]];
+                        $result[$date] = $info[$groups]['db' . $this->_database][self::$_types[$type]];
                     }                
                 } else {
-                    $result[$date] = $info[$groups][$this->_types[$type]];
+                    $result[$date] = $info[$groups][self::$_types[$type]];
                 }
                 Storage::getInstance()->set($key, $result);
             }
         }
+    }
+
+    /**
+     * Get stats type available
+     * 
+     * @return array
+     */
+    public static function getTypes() {
+        return self::$_types;
     }
 }
