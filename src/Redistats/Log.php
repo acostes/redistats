@@ -32,7 +32,10 @@ class Log {
         $output = "[%datetime%][%extra%] %channel%.%level_name%: %message% \n";
         $formatter = new LineFormatter($output);
         
-        $file = new StreamHandler(__DIR__ . '/../../log/monitoring.log');
+        $logPath = __DIR__ . '/../../log/';
+        if (!file_exists($logPath)) mkdir($logPath);
+
+        $file = new StreamHandler($logPath . 'monitoring.log');
         $file->setFormatter($formatter);
         
         $console = new StreamHandler('php://stdout');
