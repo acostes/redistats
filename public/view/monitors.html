@@ -1,0 +1,29 @@
+<div class="masthead">
+    <a href="/"><h3 class="muted">Redistats</h3></a>
+</div>
+
+<div class="row-fluid">
+
+    <div class="span2">
+        <!--Sidebar content-->
+        <div class="well sidebar-nav" ng-controller="MonitorListCtrl">
+            <ul class="nav nav-list">
+                <li class="nav-header">Server(s)</li>
+                <li ng-class="{active:isActive('/monitors/{{monitor.id}}')}" ng-repeat="monitor in monitors">
+                    <a href="#/monitors/{{monitor.id}}"><span>
+                        <span class="badge" ng-class="{true:'badge-success', false:'badge-important'}[monitor.status]">&nbsp;</span>
+                        {{monitor.name}}
+                    </span></a>
+                </li>
+            </ul>
+        </div>
+    </div>
+
+
+    <div class="span10">
+        <div ng-switch="monitorId != null">
+            <div ng-switch-when="true" ng-include="'view/monitor.html'">
+        </div>
+    </div>
+
+</div>

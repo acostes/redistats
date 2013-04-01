@@ -1,4 +1,4 @@
 redistats
 =========
 
-PHP Library to monitor redis servers
+Web app to monitor redis servers

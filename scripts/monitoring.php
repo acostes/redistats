@@ -12,27 +12,25 @@ use Redistats\RedistatsException;
 class Monitoring {
 
     public function run() {
-        try {
-            $monitors = new Server\MonitorCollection();
-            $config = Configuration::getInstance()->get('monitoring');
+       
+        $monitors = new Server\MonitorCollection();
+        $config = Configuration::getInstance()->get('monitoring');
 
-            Log::MONITORING('Processing monitoring for ' . $monitors->count() . ' server(s)', Log::INFO);
+        Log::MONITORING('Processing monitoring for ' . $monitors->count() . ' server(s)', Log::INFO);
 
-            do {
-
+        do {
+            try {
                 foreach ($monitors as $monitor) {
                     Log::MONITORING('Compute stats for ' . $monitor->getHostname(), Log::INFO);
                     $monitor->compute();
                 }
-
-                Log::MONITORING('Wait ' . $config->refresh . ' secs before next computing', Log::INFO);
-                sleep($config->refresh);
-
-            } while(true);  
-        } catch(RedistatsException $e) {
-            Log::MONITORING($e->getMessage(), Log::ERROR);
-        }
-
+            } catch(RedistatsException $e) {
+                Log::MONITORING($e->getMessage(), Log::ERROR);
+            }
+            
+            Log::MONITORING('Wait ' . $config->refresh . ' secs before next computing', Log::INFO);
+            sleep($config->refresh);
+        } while(true);  
     }
 }
 

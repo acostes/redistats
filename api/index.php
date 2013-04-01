@@ -23,6 +23,19 @@ $api->get('/info/*', function ($monitor) {
     return json_encode($monitor->getServerInfo());
 });
 
+$api->get('/monitors', function () {
+    $monitors = new Server\MonitorCollection();
+    $result = array();
+    foreach ($monitors as $key => $monitor) {
+        $result[] = array(
+            'id'    => $monitor->getId(),
+            'name' => $monitor->getName(),
+            'status' => $monitor->isConnected(),
+        );
+    }
+    return json_encode($result);
+});
+
 $api->get('/types', function () {
     $types = Redistats\Server\Monitor::getTypes();
     return json_encode($types);

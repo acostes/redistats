@@ -5,11 +5,14 @@ namespace Redistats\Server;
 use Redistats\Redis;
 use Redistats\Server\Storage;
 use Redistats\Configuration;
+use Redistats\ConfigurationException;
+use Redistats\RedistatsException;
 
 class Monitor extends Redis {
 
     protected $_client;
     protected $_id;
+
     protected static $_instance;
 
     const CONNECTED_CLIENTS             = 'cc';
@@ -76,10 +79,14 @@ class Monitor extends Redis {
      * @return Redistats\Server\Monitor
      */
     public static function getInstance($name) {
-        if (!self::$_instance) {
+        if (!self::$_instance || (self::$_instance && self::$_instance->getId() != $name)) {
             $config = Configuration::getInstance()->get('servers');
-            self::$_instance = new self($config->$name->id, $config->$name->host, $config->$name->port);
+            if (!array_key_exists($name, $config)) {
+                throw new ConfigurationException('Unable to find ' . $name . ' in your declare server');
+            }
+            self::$_instance = new self($name, $config->$name->host, $config->$name->port);
         }
+
         return self::$_instance;
     }
 
@@ -92,8 +99,40 @@ class Monitor extends Redis {
         return $this->_id;
     }
 
+    /**
+     * Return monitor name
+     * 
+     * @return string
+     */
+    public function getName() {
+        $monitors = Configuration::getInstance()->get('servers');
+        foreach ($monitors as $id => $monitor) {
+            if ($id == $this->_id) {
+                return $monitor->name;
+            }
+        }
+    }
+
+    /**
+     * Return monitor hostname
+     * 
+     * @return string
+     */
     public function getHostname() {
         return $this->_client->getConnection();
+    }
+
+    /**
+     * Check if server is up
+     * 
+     * @return boolean
+     */
+    public function isConnected() {
+        try {
+            return $this->_client->isConnected();
+        } catch(RedistatsException $e) {
+            return false;
+        }
     }
 
     /**

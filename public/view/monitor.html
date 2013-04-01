@@ -1,0 +1,17 @@
+<div class="span10">
+    <tabs>
+        <pane title="Stats">
+
+        </pane>
+        <pane title="Info">
+            <div ng-controller="MonitorInfoCtrl">
+                <table class="table table-hover">
+                    <tr ng-repeat="(key, value) in monitorInfo">
+                        <td>{{key}}</td>
+                        <td>{{value}}</td>
+                    </tr>
+                </table>
+            </div>
+        </pane>
+    </tabs>
+</div>
