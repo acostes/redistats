@@ -1,12 +1,20 @@
 <div class="span10">
     <tabs>
+        <pane title="Info">
+            <div  ng-controller="MonitorInfoCtrl">
+                {{monitorInfo.Memory.used_memory_human}}
+            </div>
+        </pane>
+
         <pane title="Stats">
 
+            
         </pane>
-        <pane title="Info">
-            <div ng-controller="MonitorInfoCtrl">
+
+        <pane title="Detail">
+            <div  ng-controller="MonitorInfoCtrl">
                 <table class="table table-hover">
-                    <tr ng-repeat="(key, value) in monitorInfo">
+                    <tr ng-repeat="(key, value) in monitorInfo.Server">
                         <td>{{key}}</td>
                         <td>{{value}}</td>
                     </tr>
@@ -15,3 +23,4 @@
         </pane>
     </tabs>
 </div>
+
