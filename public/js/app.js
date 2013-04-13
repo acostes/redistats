@@ -15,7 +15,7 @@ angular.module('redistats', []).
                 var chart = new Highcharts.Chart({
                     colors: ['#3E67AD', '#7AA6FF', '#58BCA5', '#7EBA6A', '#B57C7D', '#B2866E', '#9FAF8B'],
                     chart: {
-                        renderTo: attrs.id,
+                        renderTo: attrs.id
                     },
                     title: {
                       text: attrs.title
@@ -28,16 +28,18 @@ angular.module('redistats', []).
                             allowPointSelect: true,
                             cursor: 'pointer',
                             dataLabels: {
-                                enabled: true
+                                enabled: false
                             },
                             showInLegend: true
                         }
                     },
                     legend: {
-                        layout: 'horizontal',
-                        floating: false,
+                        layout: 'vertical',
+                        align: 'left',
+                        floating: true,
                         borderRadius: 0,
-                        borderWidth: 0
+                        borderWidth: 0,
+                        padding: 10
                     },
                     series: [{
                         type: 'pie',
@@ -61,13 +63,15 @@ angular.module('redistats', []).
             },
             link: function (scope, element, attrs) {
                 var chart = new Highcharts.Chart({
-                    colors: ['#9FAF8B', '#7AA6FF', '#58BCA5', '#7EBA6A', '#B57C7D', '#B2866E'],
+                    colors: ['#688D99', '#7AA6FF', '#58BCA5', '#7EBA6A', '#B57C7D', '#B2866E'],
                     chart: {
                         renderTo: attrs.id,
-                        type: 'bar'
+                        type: 'bar',
+                        marginBottom: 25
                     },
                     title: {
-                      text: attrs.title
+                      text: attrs.title,
+                      align: 'left'
                     },
                     xAxis: {
                         categories: scope.categories,
@@ -84,12 +88,21 @@ angular.module('redistats', []).
                         layout: 'vertical',
                         align: 'right',
                         verticalAlign: 'top',
-                        x: -100,
                         y: 100,
                         floating: true,
                         borderWidth: 1,
                         backgroundColor: '#FFFFFF',
                         shadow: true
+                    },
+                    plotOptions: {
+                        bar: {
+                            allowPointSelect: true,
+                            cursor: 'pointer',
+                            dataLabels: {
+                                enabled: false
+                            },
+                            showInLegend: true
+                        }
                     },
                     tooltip: {
                         pointFormat: '{series.name}: <b>{point.y}</b>',
@@ -100,7 +113,7 @@ angular.module('redistats', []).
                 scope.$watch("categories", function (newValue) {
                     chart.xAxis[0].setCategories(newValue);
                 }, true);
-                
+
                 scope.$watch("items", function (newValue) {
                     for (var i in newValue) {
                         if (!chart.series[i]) {
