@@ -33,7 +33,6 @@ class Log {
         $formatter = new LineFormatter($output);
         
         $logPath = __DIR__ . '/../../log/';
-        if (!file_exists($logPath)) mkdir($logPath);
 
         $file = new StreamHandler($logPath . 'monitoring.log');
         $file->setFormatter($formatter);

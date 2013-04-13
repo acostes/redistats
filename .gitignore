@@ -2,4 +2,4 @@ composer.lock
 vendor/
 config/config.json
 tmp/
-log/
+log/monitoring.log
