@@ -23,6 +23,9 @@ angular.module('redistats', []).
                     tooltip: {
                         pointFormat: '<b>{point.y}</b>',
                     },
+                    credits: {
+                        enabled: false
+                    },
                     plotOptions: {
                         pie: {
                             allowPointSelect: true,
@@ -66,12 +69,14 @@ angular.module('redistats', []).
                     colors: ['#688D99', '#7AA6FF', '#58BCA5', '#7EBA6A', '#B57C7D', '#B2866E'],
                     chart: {
                         renderTo: attrs.id,
-                        type: 'bar',
-                        marginBottom: 25
+                        type: 'bar'
                     },
                     title: {
                       text: attrs.title,
                       align: 'left'
+                    },
+                    credits: {
+                        enabled: false
                     },
                     xAxis: {
                         categories: scope.categories,
