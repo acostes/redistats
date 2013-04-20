@@ -1,4 +1,4 @@
-# Redistats #
+# Redistats [![Build Status](https://travis-ci.org/acostes/redistats.png?branch=master)](https://travis-ci.org/acostes/redistats) #
 
 Monitoring multiple redis instance. This web app allow you to visualize all your redis server status and make stats about the information you need, it's easily customizable via a configuration file. 
 
@@ -33,5 +33,3 @@ NameVirtualHost *:80
 ## License ##
 
 The code for Redistats is distributed under the terms of the MIT license (see [LICENSE](LICENSE)).
-
-[![Build Status](https://travis-ci.org/acostes/redistats.png?branch=master)](https://travis-ci.org/acostes/redistats)
