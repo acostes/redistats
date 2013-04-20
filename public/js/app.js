@@ -27,9 +27,6 @@ angular.module('redistats', []).
                     tooltip: {
                         pointFormat: '<b>{point.y}</b>',
                     },
-                    credits: {
-                        enabled: false
-                    },
                     plotOptions: {
                         pie: {
                             allowPointSelect: true,
