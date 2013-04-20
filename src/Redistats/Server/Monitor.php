@@ -157,11 +157,10 @@ class Monitor extends Redis {
     /**
      * Retrieve server info
      * 
-     * @return void
+     * @return array
      */
     public function getServerInfo() {
-        $info = $this->info('all');
-        return $info;
+        return $this->info('all');
     }
 
     /**

@@ -35,7 +35,7 @@ Class Configuration {
      * 
      * @param string $key
      * 
-     * @return array
+     * @return object
      */
     public function get($key) {
         $config = $this->_getConfig();
@@ -48,7 +48,7 @@ Class Configuration {
     /**
      * Get the all config
      * 
-     * @return array
+     * @return object
      */
     protected function _getConfig() {
         return json_decode(file_get_contents($this->_configPath));

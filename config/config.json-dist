@@ -8,12 +8,12 @@
         "Server1": {
             "host": "localhost",
             "port": "1234",
-            "id": "1"
+            "name": "Server 01"
         },
         "Server2": {
             "host": "localhost",
             "port": "12345",
-            "id": "2"
+            "name": "Server 02"
         }
     },
 

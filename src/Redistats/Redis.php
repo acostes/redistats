@@ -37,7 +37,6 @@ class Redis {
         } catch (Predis\PredisException $e) {
             throw new RedisException('Unable to connect to ' . $this->_client->getConnection());
         }
-
     }
 
     /**
