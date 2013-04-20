@@ -22,6 +22,9 @@ class Storage extends atoum {
 
     public function testGet() {
         $storage = testedClass::getInstance();
+        $values = array('set1' => 2, 'set2' => 7, 'set3' => 23);
+        $storage->set('test', $values);
+        
         $data = array(
             array('set1', 2),
             array('set2', 7),
