@@ -33,3 +33,5 @@ NameVirtualHost *:80
 ## License ##
 
 The code for Redistats is distributed under the terms of the MIT license (see [LICENSE](LICENSE)).
+
+[![Build Status](https://travis-ci.org/acostes/redistats.png?branch=master)](https://travis-ci.org/acostes/redistats)
