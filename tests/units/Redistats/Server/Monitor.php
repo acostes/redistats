@@ -28,7 +28,7 @@ class Monitor extends atoum {
         $configuration = Configuration::getInstance();
         foreach ($configuration->get('servers') as $key => $value) {
             $server = testedClass::getInstance($key);            
-            $this->string($key)->isEqualTo($server->getId());
+            $this->string($value->name)->isEqualTo($server->getName());
         }   
     }
 
