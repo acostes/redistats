@@ -9,19 +9,20 @@
         <div ng-switch-when="false">
             <tabs>
                 <pane title="Stats">
-                    <div class="span3 number">
-                        <span class="num">{{monitorInfo.Keyspace.db0.keys}}</span> <span class="unity">keys</span>
+                    <div class="row">
+                        <div class="span3 number">
+                            <span class="num">{{monitorInfo.Keyspace.db0.keys}}</span> <span class="unity">keys</span>
+                        </div>
+                        <div class="span3 number">
+                            <span class="num">{{monitorInfo.Memory.used_memory_human}}</span> <span class="unity">memory used</span>
+                        </div>
+                        <div class="span3 number">
+                            <span class="num">{{monitorInfo.Clients.connected_clients}}</span> <span class="unity">clients connected</span>
+                        </div>
+                        <div class="span3 number">
+                            <span class="num">{{monitorInfo.Server.uptime_in_days}}</span> <span class="unity">days</span>
+                        </div>
                     </div>
-                    <div class="span3 number">
-                        <span class="num">{{monitorInfo.Memory.used_memory_human}}</span> <span class="unity">memory used</span>
-                    </div>
-                    <div class="span3 number">
-                        <span class="num">{{monitorInfo.Clients.connected_clients}}</span> <span class="unity">clients connected</span>
-                    </div>
-                    <div class="span3 number">
-                        <span class="num">{{monitorInfo.Server.uptime_in_days}}</span> <span class="unity">days</span>
-                    </div>
-
                     <div class="row">
                         <div class="span6">
                             <div class="pie" title="Stats" id="stats" items="stats"></div>

@@ -15,10 +15,14 @@ angular.module('redistats', []).
                 var chart = new Highcharts.Chart({
                     colors: ['#3E67AD', '#7AA6FF', '#58BCA5', '#7EBA6A', '#B57C7D', '#B2866E', '#9FAF8B'],
                     chart: {
-                        renderTo: attrs.id
+                        renderTo: attrs.id,
+                        type: 'pie',
                     },
                     title: {
                       text: attrs.title
+                    },
+                    credits: {
+                        enabled: false
                     },
                     tooltip: {
                         pointFormat: '<b>{point.y}</b>',
@@ -35,14 +39,12 @@ angular.module('redistats', []).
                     },
                     legend: {
                         layout: 'vertical',
-                        align: 'left',
+                        align: 'right',
                         floating: true,
                         borderRadius: 0,
-                        borderWidth: 0,
-                        padding: 10
+                        borderWidth: 0
                     },
                     series: [{
-                        type: 'pie',
                         data: scope.items
                     }]
                 });
@@ -72,6 +74,9 @@ angular.module('redistats', []).
                     title: {
                       text: attrs.title,
                       align: 'left'
+                    },
+                    credits: {
+                        enabled: false
                     },
                     xAxis: {
                         categories: scope.categories,
