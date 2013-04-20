@@ -51,7 +51,7 @@ class Storage extends Redis {
      * 
      * @return array
      */
-    public function get($key, $offset = 10, $limit = 0) {
+    public function get($key, $offset = 0, $limit = 10) {
         return $this->zrange($key, $offset, $limit, 'WITHSCORES');
     }
 }
