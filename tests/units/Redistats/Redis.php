@@ -21,5 +21,12 @@ class Redis extends atoum {
     public function testConnect() {
         $redis = new testedClass();
         $this->object($redis->connect())->isInstanceOf('Predis\Client');
+
+        $this->exception(
+            function () {
+                $redis = new testedClass('127.0.0.1',6378);
+                $redis->connect();
+            }
+        )->isInstanceOf('Redistats\RedisException');
     }
 }

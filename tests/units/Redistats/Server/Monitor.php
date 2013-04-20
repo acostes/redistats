@@ -21,6 +21,12 @@ class Monitor extends atoum {
 
             $server = testedClass::getInstance($key);
             $this->object($server)->isInstanceOf('Redistats\Server\Monitor');
+
+            $this->exception(
+                function () {
+                    testedClass::getInstance('serverNotFound');
+                }
+            )->isInstanceOf('Redistats\ConfigurationException');
         }        
     }
 
@@ -45,6 +51,17 @@ class Monitor extends atoum {
         foreach ($monitors as $monitor) {
             if ($monitor->isConnected()) {
                 $this->array($monitor->getServerInfo())->hasKeys(array('Server', 'Clients', 'Memory', 'Persistence', 'Stats', 'Replication', 'CPU', 'Keyspace'));
+            }
+        }
+    }
+
+    public function testGetHostName() {
+        $monitors = new MonitorCollection();
+        foreach ($monitors as $monitor) {
+            if ($monitor->isConnected()) {
+                $parameters = $monitor->getConnection()->getParameters();
+                $hostname = $parameters->host . ':' . $parameters->port;
+                $this->string((string)$monitor->getHostName())->isEqualTo($hostname);
             }
         }
     }

@@ -11,8 +11,13 @@ Class Configuration {
     /**
      * Constructor
      */
-    public function __construct() {
-        $this->_configPath = dirname(dirname(__FILE__)) . '/../config/config.json';
+    public function __construct($configFile = null) {
+        if (is_null($configFile)) {
+            $this->_configPath = dirname(dirname(__FILE__)) . '/../config/config.json';
+        } else {
+            $this->_configPath = $configFile;
+        }
+
         if (!file_exists($this->_configPath)) {
             throw new ConfigurationException('Unable to find config/config.json');
         }

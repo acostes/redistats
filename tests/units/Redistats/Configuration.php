@@ -10,7 +10,14 @@ use Redistats\Configuration as testedClass;
 class Configuration extends atoum {
 
     public function test__construct() {
-        $this->object(testedClass::getInstance())->isInstanceOf('Redistats\Configuration');
+        $configuration = testedClass::getInstance();
+        $this->object($configuration)->isInstanceOf('Redistats\Configuration');
+
+        $this->exception(
+            function () {
+                $configuration = new testedClass('configNotFound');
+            }
+        )->isInstanceOf('Redistats\ConfigurationException');
     }
 
     public function testGet() {
@@ -20,5 +27,11 @@ class Configuration extends atoum {
         $this->variable($configuration->get('storage')->port)->isNotNull();
 
         $this->variable($configuration->get('monitoring')->refresh)->isNotNull();
+
+        $this->exception(
+            function () use ($configuration) {
+                $configuration->get('invalidKey');
+            }
+        )->isInstanceOf('Redistats\ConfigurationException');
     }
 }

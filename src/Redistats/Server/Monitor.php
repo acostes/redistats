@@ -106,11 +106,8 @@ class Monitor extends Redis {
      */
     public function getName() {
         $monitors = Configuration::getInstance()->get('servers');
-        foreach ($monitors as $id => $monitor) {
-            if ($id == $this->_id) {
-                return $monitor->name;
-            }
-        }
+        $monitor = $monitors->{$this->getId()};
+        return $monitor->name;
     }
 
     /**
