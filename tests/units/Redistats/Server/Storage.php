@@ -16,15 +16,15 @@ class Storage extends atoum {
     public function testSet() {
         $storage = testedClass::getInstance();
         $data = array('set1' => 2, 'set2' => 7, 'set3' => 23);
-        $storage->del('test');
-        $this->integer($storage->set('test', $data))->isEqualTo(sizeof($data));
+        $storage->del('test:set');
+        $this->integer($storage->set('test:set', $data))->isEqualTo(sizeof($data));
     }
 
     public function testGet() {
         $storage = testedClass::getInstance();
         $values = array('set1' => 2, 'set2' => 7, 'set3' => 23);
-        $storage->set('test', $values);
-        
+        $storage->set('test:get', $values);
+
         $data = array(
             array('set1', 2),
             array('set2', 7),
@@ -40,13 +40,13 @@ class Storage extends atoum {
             array('set1', 2),
         );
 
-        $this->array($storage->get('test'))->hasSize(3);
-        $this->array($storage->get('test'))->isEqualTo($data);
+        $this->array($storage->get('test:get'))->hasSize(3);
+        $this->array($storage->get('test:get'))->isEqualTo($data);
 
-        $this->array($storage->get('test', 0, 1))->hasSize(2);
-        $this->array($storage->get('test', 0, 1))->isEqualTo($data1);
+        $this->array($storage->get('test:get', 0, 1))->hasSize(2);
+        $this->array($storage->get('test:get', 0, 1))->isEqualTo($data1);
 
-        $this->array($storage->get('test', 0, 0))->hasSize(1);
-        $this->array($storage->get('test', 0, 0))->isEqualTo($data2);
+        $this->array($storage->get('test:get', 0, 0))->hasSize(1);
+        $this->array($storage->get('test:get', 0, 0))->isEqualTo($data2);
     }
 }
