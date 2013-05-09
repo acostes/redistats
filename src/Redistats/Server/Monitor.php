@@ -123,6 +123,7 @@ class Monitor extends Redis {
         $info = $this->info();
         $result = array();
         $date = time();
+        $result = array();
         $config = Configuration::getInstance()->get('monitoring');
 
         if (!isset($config->monitor)) {
@@ -136,7 +137,7 @@ class Monitor extends Redis {
 
             foreach ($types as $name => $param) {
                 $key = 'stats:' . $this->_id . ':' . $param->id;
-                $result = array();
+                $result[$date] = 0;
                 if ($name == 'keys' || $name == 'expires') {
                     if (isset($info[ucfirst($groups)]['db' . $this->_database])) {
                         $result[$date] = $info[ucfirst($groups)]['db' . $this->_database][$name];
@@ -154,14 +155,5 @@ class Monitor extends Redis {
                 }
             }
         }
-    }
-
-    /**
-     * Get stats type available
-     * 
-     * @return array
-     */
-    public static function getTypes() {
-        return self::$_types;
     }
 }

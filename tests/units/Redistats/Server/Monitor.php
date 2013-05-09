@@ -65,4 +65,27 @@ class Monitor extends atoum {
             }
         }
     }
+
+    public function testIsConnected() {
+        $monitors = new MonitorCollection();
+        foreach ($monitors as $monitor) {
+            $this->boolean($monitor->isConnected())->isTrue();
+        }
+
+        $monitorOff = new testedClass('servOff', 'localhost', 6378);
+        $this->boolean($monitorOff->isConnected())->isFalse();
+    }
+
+    public function testGet() {
+        $monitors = new MonitorCollection();
+        foreach ($monitors as $monitor) {
+            $monitor->compute();
+            $configuration = Configuration::getInstance()->get('monitoring');
+            foreach ($configuration->monitor as $groups => $types) {
+                foreach ($types as $name => $param) {
+                    $this->array($monitor->get(0, 1, $param->id))->isNotEmpty();
+                }
+            }
+        }
+    }
 }
