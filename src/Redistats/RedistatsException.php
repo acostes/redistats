@@ -2,6 +2,6 @@
 
 namespace Redistats;
 
-abstract class RedistatsException extends \Exception {
+class RedistatsException extends \Exception {
     
 }

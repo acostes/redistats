@@ -3,3 +3,4 @@ vendor/
 config/config.json
 tmp/
 log/monitoring.log
+composer.phar

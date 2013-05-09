@@ -15,52 +15,6 @@ class Monitor extends Redis {
 
     protected static $_instance;
 
-    const CONNECTED_CLIENTS             = 'cc';
-    const BLOCKED_CLIENTS               = 'bc';
-
-    const USED_MEMORY                   = 'um';
-    const USED_MEMORY_RSS               = 'umr';
-    const USED_MEMORY_PEAK              = 'ump';
-    const USED_MEMORY_LUA               = 'uml';
-    const MEM_FRAGMENTATION_RATIO       = 'mf';
-    
-    const KEYS                          = 'k';
-    const EXPIRES                       = 'e';
-
-    protected static $_types = array(
-        self::CONNECTED_CLIENTS             => 'connected_clients',
-        self::BLOCKED_CLIENTS               => 'blocked_clients',
-        self::USED_MEMORY                   => 'used_memory',
-        self::USED_MEMORY_RSS               => 'used_memory_rss',
-        self::USED_MEMORY_PEAK              => 'used_memory_peak',
-        self::USED_MEMORY_LUA               => 'used_memory_lua',
-        self::MEM_FRAGMENTATION_RATIO       => 'mem_fragmentation_ratio',
-        self::KEYS                          => 'keys',
-        self::EXPIRES                       => 'expires',
-    );
-
-    const GROUP_CLIENTS     = 'Clients';
-    const GROUP_MEMORY      = 'Memory';
-    const GROUP_KEYSPACE    = 'Keyspace'; 
-
-    protected $_groupInfo = array(
-        self::GROUP_CLIENTS => array(
-            self::CONNECTED_CLIENTS,
-            self::BLOCKED_CLIENTS,
-        ),
-        self::GROUP_MEMORY => array(
-            self::USED_MEMORY,
-            self::USED_MEMORY_RSS,
-            self::USED_MEMORY_PEAK,
-            self::USED_MEMORY_LUA,
-            self::MEM_FRAGMENTATION_RATIO,
-        ),
-        self::GROUP_KEYSPACE => array(
-            self::KEYS,
-            self::EXPIRES,
-        ),
-    );
-
     /**
      * Constructor
      * 
@@ -169,18 +123,35 @@ class Monitor extends Redis {
         $info = $this->info();
         $result = array();
         $date = time();
-        foreach ($this->_groupInfo as $groups => $types) {
-            foreach ($types as $type) {
-                $key = 'stats:' . $this->_id . ':' . $type;
-                $result[$date] = 0;
-                if ($type == self::KEYS || $type == self::EXPIRES) {
-                    if (isset($info[$groups]['db' . $this->_database])) {
-                        $result[$date] = $info[$groups]['db' . $this->_database][self::$_types[$type]];
-                    }                
+        $config = Configuration::getInstance()->get('monitoring');
+
+        if (!isset($config->monitor)) {
+            throw new RedistatsException('Nothing to monitor, please fill your configuration file.');
+        }
+
+        foreach ($config->monitor as $groups => $types) {
+            if (!isset($info[ucfirst($groups)])) {
+                throw new RedistatsException('Something wrong with you configuration file. Impossible to find group ' . $groups);
+            }
+
+            foreach ($types as $name => $param) {
+                $key = 'stats:' . $this->_id . ':' . $param->id;
+                $result = array();
+                if ($name == 'keys' || $name == 'expires') {
+                    if (isset($info[ucfirst($groups)]['db' . $this->_database])) {
+                        $result[$date] = $info[ucfirst($groups)]['db' . $this->_database][$name];
+                    }
                 } else {
-                    $result[$date] = $info[$groups][self::$_types[$type]];
+                    if (!isset($info[ucfirst($groups)][$name])) {
+                        throw new RedistatsException('Something wrong with you configuration file. Impossible to find the property ' . $name);
+                    }
+
+                    $result[$date] = $info[ucfirst($groups)][$name];
                 }
-                Storage::getInstance()->set($key, $result);
+
+                if (!empty($result)) {
+                    Storage::getInstance()->set($key, $result);
+                }
             }
         }
     }
