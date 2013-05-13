@@ -5,15 +5,10 @@
     },
 
     "servers": {
-        "Server1": {
+        "Server01": {
             "host": "localhost",
-            "port": "1234",
+            "port": "6379",
             "name": "Server 01"
-        },
-        "Server2": {
-            "host": "localhost",
-            "port": "12345",
-            "name": "Server 02"
         }
     },
 

@@ -7,5 +7,5 @@ services:
 before_script: 
   - composer install
 script:
-  - sh build/run_build.sh
+  - cp config/config.json-dist config/config.json
   - ./vendor/atoum/atoum/bin/atoum -d tests/units
