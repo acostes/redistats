@@ -114,6 +114,15 @@ class Monitor extends Redis {
         return $this->info('all');
     }
 
+    public static function getMonitoring() {
+        $config = Configuration::getInstance()->get('monitoring');
+        if (!isset($config->monitor)) {
+            throw new RedistatsException('Nothing to monitor, please fill your configuration file.');
+        }
+
+        return $config->monitor;
+    }
+
     /**
      * Compute stats
      * 
@@ -124,13 +133,8 @@ class Monitor extends Redis {
         $result = array();
         $date = time();
         $result = array();
-        $config = Configuration::getInstance()->get('monitoring');
 
-        if (!isset($config->monitor)) {
-            throw new RedistatsException('Nothing to monitor, please fill your configuration file.');
-        }
-
-        foreach ($config->monitor as $groups => $types) {
+        foreach ($this->getMonitoring() as $groups => $types) {
             if (!isset($info[ucfirst($groups)])) {
                 throw new RedistatsException('Something wrong with you configuration file. Impossible to find group ' . $groups);
             }

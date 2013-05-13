@@ -36,8 +36,8 @@ $api->get('/monitors', function () {
     return json_encode($result);
 });
 
-$api->get('/types', function () {
-    $types = Redistats\Server\Monitor::getTypes();
+$api->get('/monitoring', function () {
+    $types = Redistats\Server\Monitor::getMonitoring();
     return json_encode($types);
 });
 
